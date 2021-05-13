@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,9 @@ use App\Http\Resources\ProductCollection;
 
 class ProductController extends Controller
 {
+    public function __construct(){
+        $this->authorizeResource(Product::class,'product');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,9 +36,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $user = Auth::User();
+        $product = $user->products()->create($request->all());
+        return new ProductResource($product);
     }
 
     /**
@@ -45,7 +51,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-
         return new ProductResource($product);
     }
 
@@ -56,9 +61,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+//        $product->name = $request->name;
+//        $product->price = $request->price;
+        $product->update($request->all());
+
+        return new ProductResource($product);
     }
 
     /**
@@ -69,6 +78,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return [ 'status' =>'OK'];
     }
 }
