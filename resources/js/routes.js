@@ -9,12 +9,13 @@ const routes = [
     {
         path: "/",
         name: "Home",
-        component: Home,
+        component: Signin,
     },
     {
         path: "/login",
         name: "Login",
         component: Signin,
+        alias: '/'
     },
     {
         path: "/dashboard",

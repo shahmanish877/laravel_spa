@@ -1,19 +1,21 @@
 <template>
-    <div class="text-5xl text-red-400">
-        <h1>from vue using </h1>
-        <router-link to="/">Home</router-link> &nbsp;&nbsp;
-        <router-link to="/login">Login</router-link> &nbsp;&nbsp;
-        <router-link to="/dashboard">Dasboard</router-link> &nbsp;&nbsp;
-        <router-link to="/projects">Projects</router-link> &nbsp;&nbsp;
-
-        <br><br><br><br>
-        <router-view></router-view>
+    <div class="bg-gray-200 flex flex-col min-h-screen justify-between">
+        <AppHeader></AppHeader>
+        <main class="flex flex-grow">
+            <router-view></router-view>
+        </main>
+        <app-footer></app-footer>
     </div>
 </template>
 
 <script>
+import AppHeader from './partials/Header';
+import AppFooter from './partials/Footer';
 export default {
-    name: "HelloWorld"
+    name: "HelloWorld",
+    components:{
+        AppHeader, AppFooter
+    }
 }
 </script>
 
