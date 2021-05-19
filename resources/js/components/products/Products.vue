@@ -6,11 +6,11 @@
                 <th>Price</th>
                 <th>Created At</th>
             </tr>
-            <tr v-for="project in projects">
+            <tr v-for="product in products">
 
-                <td>{{project.name}}</td>
-                <td>{{project.price}}</td>
-                <td>{{project.created_at}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.created_at}}</td>
             </tr>
         </table>
     </div>
@@ -18,16 +18,16 @@
 
 <script>
 export default {
-    name: "Projects",
+    name: "Products",
     data(){
         return{
-            projects:[]
+            products:[]
         }
     },
     mounted() {
         axios.get('api/products').then(res=>{
 
-            this.projects = res.data.data;
+            this.products = res.data.data;
         })
     }
 }
