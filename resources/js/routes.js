@@ -3,7 +3,7 @@ import {createWebHistory, createRouter} from "vue-router";
 import Home from "./components/HomePage.vue";
 import Signin from "./components/auth/Signin.vue";
 import Dashboard from "./components/auth/Dashboard.vue";
-import Projects from "./components/projects/Projects.vue";
+import Products from "./components/products/Products.vue";
 import store from "./components/store";
 
 const routes = [
@@ -24,9 +24,9 @@ const routes = [
         component: Dashboard,
     },
     {
-        path: "/projects",
-        name: "Projects",
-        component: Projects,
+        path: "/products",
+        name: "Products",
+        component: Products,
     },
 ];
 
@@ -38,7 +38,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 //list of blocked routes
-    const protectedRoutes = ['/projects', '/dashboard'];
+    const protectedRoutes = ['/products', '/dashboard'];
 //the route user is trying to access is in blocked routes list
     if (protectedRoutes.includes(to.path)) {
 //redirect to route having login page if not loggedin
