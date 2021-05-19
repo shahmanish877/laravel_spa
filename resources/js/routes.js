@@ -1,9 +1,10 @@
-import { createWebHistory, createRouter } from "vue-router";
+import {createWebHistory, createRouter} from "vue-router";
 
 import Home from "./components/HomePage.vue";
 import Signin from "./components/auth/Signin.vue";
 import Dashboard from "./components/auth/Dashboard.vue";
 import Projects from "./components/projects/Projects.vue";
+import store from "./components/store";
 
 const routes = [
     {
@@ -32,6 +33,24 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+
+router.beforeEach((to, from, next) => {
+//list of blocked routes
+    const protectedRoutes = ['/projects', '/dashboard'];
+//the route user is trying to access is in blocked routes list
+    if (protectedRoutes.includes(to.path)) {
+//redirect to route having login page if not loggedin
+        if(!store.getters.authenticated) {
+            return next('/login');
+        }else{
+            return next();
+        }
+    } else {
+// otherwise allow user to access route
+        return next();
+    }
 });
 
 export default router;

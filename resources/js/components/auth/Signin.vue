@@ -25,7 +25,7 @@
                             <input id="password" name="password" v-model="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
                         </div>
                     </div>
-
+                    <p v-if="errorMsg.length" class="text-red-700"> {{ errorMsg }} </p>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
                             <input id="remember_me" name="remember_me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
@@ -59,38 +59,57 @@
 </template>
 
 <script>
+
+import {mapGetters} from 'vuex';
 export default {
     name: "Signin",
     data(){
         return{
-            email: '',
-            password: ''
+            'email': '',
+            'password': '',
+            'errorMsg': ''
         }
     },
+    computed:{
+        ...mapGetters(['authenticated'])
+    },
     methods: {
-        formSubmit()
+        async formSubmit()
         {
+            this.errorMsg = '';
+
+            //action here
+            try {
+                await this.$store.dispatch('signIn', {email: this.email, password: this.password});
+                this.$router.push({name: 'Dashboard'});
+            }catch (e){
+                this.errorMsg = e;
+            }
+
+            /* moved to action in store.js
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/authenticate', {email: this.email, password: this.password})
                     .then(res=>{
                         //console.log(res);
                         this.$router.push('/dashboard');
-                        /*if(res.data.status_code==200){
+                        /!*if(res.data.status_code==200){
                             this.$router.push('/dashboard');
                         }else{
                             alert("Wrong password")
-                        }*/
+                        }*!/
                     })
                     .catch(err=>{
-                        console.log(err)
-                    }
-                )
-            });
+                            console.log(err)
+                        }
+                    )
+            });*/
+        }
+    },
+
+    mounted() {
+        if (this.authenticated){
+            this.$router.push('/dashboard');
         }
     }
 }
 </script>
-
-<style scoped>
-
-</style>
