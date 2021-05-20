@@ -23,6 +23,7 @@ export default {
         }
     },
     computed: {
+
         /* moved to action signin in store
         axios.get('/api/user')
         .then(res=>{

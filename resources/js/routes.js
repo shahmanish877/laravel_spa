@@ -4,6 +4,9 @@ import Home from "./components/HomePage.vue";
 import Signin from "./components/auth/Signin.vue";
 import Dashboard from "./components/auth/Dashboard.vue";
 import Products from "./components/products/Products.vue";
+import ProductsCreate from "./components/products/Create.vue";
+import ProductsEdit from "./components/products/Edit.vue";
+import ProductsDetails from "./components/products/Details.vue";
 import store from "./components/store";
 
 const routes = [
@@ -28,6 +31,22 @@ const routes = [
         name: "Products",
         component: Products,
     },
+    {
+        path: "/products/edit/",
+        name: "ProductsEdit",
+        component: ProductsEdit,
+    },
+    {
+        path: "/products/create",
+        name: "ProductsCreate",
+        component: ProductsCreate,
+    },
+    {
+        path: "/products/:id",
+        name: "product-details",
+        component: ProductsDetails,
+        props: true
+    },
 ];
 
 const router = createRouter({
@@ -38,7 +57,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 //list of blocked routes
-    const protectedRoutes = ['/products', '/dashboard'];
+    const protectedRoutes = ['/products', '/dashboard','/products/:id'];
 //the route user is trying to access is in blocked routes list
     if (protectedRoutes.includes(to.path)) {
 //redirect to route having login page if not loggedin

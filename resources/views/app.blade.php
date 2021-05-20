@@ -12,7 +12,9 @@
 
     </head>
     <body id="app">
-       <h1>homepage</h1>
+        <div class="w-full bg-indigo-500 absolute top-0 bottom-0 flex justify-center items-center">
+            <div class="rounded-3xl animate-spin ease duration-300 w-12 h-12 border-2 border-t-0 border-white"></div>
+        </div>
     <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>

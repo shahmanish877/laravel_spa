@@ -8,7 +8,7 @@
             <router-link to="/"  class="hover:text-red-600 mr-5">Home</router-link>
             <router-link to="/login" v-if="!authenticated" class="hover:text-red-600 mr-5">Login</router-link>
             <router-link to="/dashboard" v-if="authenticated" class="hover:text-red-600 mr-5">Dasboard</router-link>
-            <router-link :to="{ name: 'Projects' }" v-if="authenticated" class="hover:text-red-600 mr-5">Projects</router-link>
+            <router-link :to="{ name: 'Products' }" v-if="authenticated" class="hover:text-red-600 mr-5">Products</router-link>
             <a href="#" @click="handleLogout()" v-if="authenticated">Logout</a>
         </nav>
 

@@ -4,7 +4,7 @@ const store = createStore({
     state(){
         return {
             authenticated: false,
-            user: null
+            user: null,
         }
     },
     getters: {
@@ -13,7 +13,8 @@ const store = createStore({
         },
         user(state){
             return state.user;
-        }
+        },
+
     },
     mutations: {
         setUser(state, payload){
@@ -21,7 +22,8 @@ const store = createStore({
         },
         setAuthenticated(state, payload){
             state.authenticated = payload;
-        }
+        },
+
     },
     actions: {
         async signIn({dispatch}, payload){
@@ -29,11 +31,13 @@ const store = createStore({
                 await axios.get('/sanctum/csrf-cookie');
                 const res = await axios.post('/api/authenticate', payload);
                 if(res.data.status_code!=200){
+                    console.log(res)
                     throw res.message;
                 }
 
                 return dispatch('getUser');
             }catch (e){
+                console.log(e);
                 throw "User cannot be authenticated";
             }
 
@@ -42,7 +46,6 @@ const store = createStore({
         async getUser({commit}){
             await axios.get('/api/user')
                 .then(res=>{
-                    console.log(res);
                     commit('setUser', res.data);
                     commit('setAuthenticated', true);
                 }).catch(err=>{
