@@ -1,6 +1,9 @@
 <template>
-    <div v-if="product.id>0" class="w-full flex flex-col justify-center">
-        <div class="flex justify-center">
+    <div v-if="product.id>0" class="w-full flex flex-col ">
+        <div class="relative left-1/3 ml-2 mt-20">
+            <router-link :to="{name:'Products'}" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-900 mr-3">Back</router-link>
+        </div>
+         <div class="block mx-auto my-6">
             <h1 class="text-3xl font-bold">Product Details</h1>
         </div>
         <div class="flex w-full justify-center">
@@ -27,6 +30,13 @@
                 <div class="bg-gray-400 text-gray-700 p-2 text-left"> {{ product.created_at }}</div>
             </div>
         </div>
+
+        <div class="relative left-1/3 ml-2 mt-20">
+            <router-link :to="{name:'ProductsEdit', params: {id: product.id}}" class="bg-green-500 text-white px-5 py-2 rounded hover:bg-green-900 mr-3">Edit</router-link>
+            <router-link :to="{name:'product-details', params: {id: product.id}}" class="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-900 mr-3">Delete</router-link>
+
+        </div>
+
     </div>
 
 </template>
@@ -38,13 +48,15 @@ export default {
     data() {
         return {
             product: [],
+            msg: ''
         }
     },
     mounted() {
+        console.log('msg= '+ this.msg);
         axios.get('/api/products/' + this.id).then((response) => {
             this.product = response.data.data;
         }).catch(err => {
-            console.log(err)
+            console.log(err.response.data);
         })
 
     },
