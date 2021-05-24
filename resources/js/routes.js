@@ -58,7 +58,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 //list of blocked routes
-    const protectedRoutes = ['/products', '/dashboard','/products/:id'];
+    const protectedRoutes = ['/products', '/dashboard','/products/:id', '/products/edit/:id','/products/create'];
 //the route user is trying to access is in blocked routes list
     if (protectedRoutes.includes(to.path)) {
 //redirect to route having login page if not loggedin

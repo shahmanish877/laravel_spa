@@ -5,6 +5,7 @@ import router from './routes'
 
 import Home from './components/HomePage.vue';
 import store from "./components/store";
+
 /*
 const app = createApp({});
 app.component('hello-world', HelloWorld)

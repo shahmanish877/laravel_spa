@@ -31,14 +31,12 @@ const store = createStore({
                 await axios.get('/sanctum/csrf-cookie');
                 const res = await axios.post('/api/authenticate', payload);
                 if(res.data.status_code!=200){
-                    console.log(res)
-                    throw res.message;
+                    throw res.response;
                 }
 
                 return dispatch('getUser');
             }catch (e){
-                console.log(e);
-                throw "User cannot be authenticated";
+                throw e.response.data.message;
             }
 
         },

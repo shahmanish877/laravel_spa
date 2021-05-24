@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,20 +32,43 @@ class AuthController extends Controller
             ]);
 
             $credentials = request(['email', 'password']);
-            if (!Auth::attempt($credentials)) {
+            /*if (!Auth::attempt($credentials)) {
                 return response()->json([
                     'status_code' => 500,
                     'message' => 'Unauthorized'
                 ]);
+            }*/
+
+            $usermail = $request->get('email');
+            $password = $request->get('password');
+            $remember = $request->get('remember_me');
+
+            if(filter_var($usermail, FILTER_VALIDATE_EMAIL)) {
+                $isEmailExist = User::where('email',$usermail)->first();
+                if($isEmailExist != null){
+                    if(Auth::attempt([
+                        'email' => $usermail,
+                        'password'  => $password
+                    ],$remember)){
+                        $user = Auth::user();
+                        $tokenResult = $user->createToken('authToken')->plainTextToken;
+                        return response()->json([
+                            'status_code' => 200,
+                            'access_token' => $tokenResult,
+                            'token_type' => 'Bearer',
+                        ]);
+                    }else{
+                        return response()->json([
+                            'message'   => "The password you entered is incorrect."
+                        ],401);
+                    }
+                }else{
+                    return response([
+                        'message' => "Invalid email address."
+                    ], 401);
+                }
             }
 
-            $user = Auth::user();
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
-            return response()->json([
-                'status_code' => 200,
-                'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
-            ]);
         } catch (Exception $error) {
             return response()->json([
                 'status_code' => 500,

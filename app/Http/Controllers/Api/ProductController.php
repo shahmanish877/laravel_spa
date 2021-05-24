@@ -25,7 +25,7 @@ class ProductController extends Controller
     {
         //$product = Product::all();
         $product = Product::where('user_id', Auth::id())
-            ->get();
+            ->paginate(10);
 //        return ProductResource::collection($product);
         return new ProductCollection($product);
     }
