@@ -6,6 +6,10 @@
                     Edit
                 </h2>
 
+<!--
+                <h1 class="font-weight-bold" v-for="error in errors"> {{error}} </h1>
+-->
+
                 <span v-for="error in errors">
                     <p v-for="er in error" class="bg-red-600 text-white mb-1 p-1 rounded"> {{ er }} </p>
                 </span>
@@ -51,7 +55,9 @@ export default {
             axios.patch('/api/products/'+ this.id, {name: this.product.name, price: this.product.price}).then(res=>{
                 this.$router.back();
             }).catch(err=>{
-                this.errors = JSON.parse(JSON.stringify(err.response.data.error));
+                let errors = Object.values(err.response.data.error);
+                this.errors = errors;
+
             });
         }
     },

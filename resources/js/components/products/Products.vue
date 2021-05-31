@@ -111,7 +111,6 @@
 </template>
 
 <script>
-
 export default {
     name: "Products",
     data() {
@@ -133,7 +132,7 @@ export default {
                 try {
                     await this.$store.dispatch('deleteProduct', product.id);
                     this.fetchProduct(this.current_page);
-                    this.$moshaToast('"' + product.name + '" Product Successfully Deleted.', {type: 'danger'});
+                    this.$toast.show('"' + product.name + '" Product Successfully Deleted.', {position:'top-right'});
                 } catch (e) {
                     console.log(e);
                 }
@@ -150,11 +149,19 @@ export default {
 
         async addProduct() {
             await axios.post('/api/products', {name: this.products.name, price: this.products.price}).then(res=>{
-                this.$moshaToast('"' + this.products.name + '" Product added successfully', {type: 'success'});
+                this.$toast.success('"' + this.products.name + '" Product added successfully', {position:'top-right'});
+
                 this.fetchProduct(1);
                 this.modalShow = false;
             }).catch(error=>{
-                console.log(error.response.data);
+                let err = Object.values(error.response.data.error);
+                for(let i=0; i<err.length;i++){
+                    this.$toast.show(err[i], {
+                        type: "error",
+                        position: 'top-right'
+                        // all of other options may go here
+                    });
+                }
             })
 
         },
