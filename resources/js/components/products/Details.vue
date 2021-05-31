@@ -1,6 +1,6 @@
 <template>
     <div v-if="product.id>0" class="w-full flex flex-col ">
-        <div class="relative left-1/3 ml-2 mt-20">
+        <div class="relative left-1/3 ml-2 mt-20 w-max">
             <router-link :to="{name:'Products'}" class="bg-blue-500 text-white px-5 py-2 rounded hover:bg-blue-900 mr-3">Back</router-link>
         </div>
          <div class="block mx-auto my-6">
@@ -31,11 +31,11 @@
             </div>
         </div>
 
-        <div class="relative left-1/3 ml-2 mt-10">
-             <form @submit.prevent="DeleteProduct()">
+        <div class="relative left-1/3 ml-2 mt-10 w-max ">
+             <form @submit.prevent="DeleteProduct(product)">
                  <router-link :to="{name:'ProductsEdit', params: {id: product.id}}" class="bg-green-500 text-white px-5 py-2 rounded hover:bg-green-900 mr-3">Edit</router-link>
 
-                 <input type="submit"   value="Delete" class="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-900 mr-3 cursor-pointer">
+                 <input type="submit"   value="Delete" class="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-900 cursor-pointer">
             </form>
 
         </div>
@@ -61,10 +61,19 @@ export default {
         })
 
     },
-    computed:{
-        DeleteProduct(){
-            return confirm("Are you sure you want to delete it");
-            alert("Deleted");
+    methods:{
+        async DeleteProduct(product){
+            let conf = confirm("Are you sure you want to delete?");
+            if(conf) {
+                try {
+                    await this.$store.dispatch('deleteProduct', product.id);
+                    this.$router.push({ name: 'Products'});
+                    this.$moshaToast('"'+product.name+'" Product Successfully Deleted.', {type: 'danger'});
+                } catch (e) {
+                    this.errorMsg = e;
+                    console.log(e);
+                }
+            }
         }
     }
 

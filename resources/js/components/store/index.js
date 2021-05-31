@@ -22,7 +22,7 @@ const store = createStore({
         },
         setAuthenticated(state, payload){
             state.authenticated = payload;
-        },
+        }
 
     },
     actions: {
@@ -61,7 +61,15 @@ const store = createStore({
                     commit('setUser', null);
                     commit('setAuthenticated', false);
                 })
+        },
+        async deleteProduct(state, payload){
+            await axios.delete('/api/products/'+payload).then(res=>{
+            }).catch(err=>{
+                console.log(err);
+            })
         }
+
+
     }
 });
 

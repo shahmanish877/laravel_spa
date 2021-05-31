@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../getgo_tickets/getgo/.idea/getgo.iml" filepath="$PROJECT_DIR$/../getgo_tickets/getgo/.idea/getgo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../getgo_tickets/.idea/getgo_tickets.iml" filepath="$PROJECT_DIR$/../getgo_tickets/.idea/getgo_tickets.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/laravel_spa.iml" filepath="$PROJECT_DIR$/.idea/laravel_spa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../getgo/movies/.idea/movies.iml" filepath="$PROJECT_DIR$/../getgo/movies/.idea/movies.iml" />
     </modules>
   </component>
 </project>

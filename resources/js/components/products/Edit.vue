@@ -3,8 +3,13 @@
         <div class="max-w-md w-full space-y-8">
             <div>
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Edit {{ id }}
+                    Edit
                 </h2>
+
+                <span v-for="error in errors">
+                    <p v-for="er in error" class="bg-red-600 text-white mb-1 p-1 rounded"> {{ er }} </p>
+                </span>
+
             </div>
             <form class="mt-8 space-y-6" action="#" method="POST" @submit.prevent="formSubmit">
                 <input type="hidden" name="remember" value="true">
@@ -38,6 +43,7 @@ export default {
     data(){
         return {
             product: [],
+            errors: []
         }
     },
     methods:{
@@ -45,14 +51,13 @@ export default {
             axios.patch('/api/products/'+ this.id, {name: this.product.name, price: this.product.price}).then(res=>{
                 this.$router.back();
             }).catch(err=>{
-                console.log(err.response.data);
+                this.errors = JSON.parse(JSON.stringify(err.response.data.error));
             });
         }
     },
     mounted() {
         axios.get('/api/products/' + this.id).then(res=>{
             this.product=res.data.data
-            console.log(this.product.name);
         }).catch(error=>{
                 console.log(error.response.data);
         })
