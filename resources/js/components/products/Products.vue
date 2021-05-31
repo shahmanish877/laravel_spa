@@ -132,7 +132,7 @@ export default {
                 try {
                     await this.$store.dispatch('deleteProduct', product.id);
                     this.fetchProduct(this.current_page);
-                    this.$toast.show('"' + product.name + '" Product Successfully Deleted.', {position:'top-right'});
+                    this.$toast.show('"' + product.name + '" Product Successfully Deleted.');
                 } catch (e) {
                     console.log(e);
                 }
@@ -149,18 +149,14 @@ export default {
 
         async addProduct() {
             await axios.post('/api/products', {name: this.products.name, price: this.products.price}).then(res=>{
-                this.$toast.success('"' + this.products.name + '" Product added successfully', {position:'top-right'});
+                this.$toast.success('"' + this.products.name + '" Product added successfully');
 
                 this.fetchProduct(1);
                 this.modalShow = false;
             }).catch(error=>{
                 let err = Object.values(error.response.data.error);
                 for(let i=0; i<err.length;i++){
-                    this.$toast.show(err[i], {
-                        type: "error",
-                        position: 'top-right'
-                        // all of other options may go here
-                    });
+                    this.$toast.error(err[i]);
                 }
             })
 

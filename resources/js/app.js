@@ -17,6 +17,9 @@ store.dispatch('getUser').then(()=>{
     const app = createApp(Home);
     app.use(router);
     app.use(store);
-    app.use(Toaster);
+    app.use(Toaster, {
+        // One of the options
+        position: "top-right",
+    });
     app.mount('#app');
 })

@@ -68,7 +68,7 @@ export default {
                 try {
                     await this.$store.dispatch('deleteProduct', product.id);
                     this.$router.push({ name: 'Products'});
-                    this.$toast.show('"' + product.name + '" Product Successfully Deleted.', {position:'top-right'});
+                    this.$toast.show('"' + product.name + '" Product Successfully Deleted.');
                 } catch (e) {
                     this.errorMsg = e;
                     console.log(e);

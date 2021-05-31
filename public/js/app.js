@@ -17356,9 +17356,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: 'Products'
                 });
 
-                _this2.$toast.show('"' + product.name + '" Product Successfully Deleted.', {
-                  position: 'top-right'
-                });
+                _this2.$toast.show('"' + product.name + '" Product Successfully Deleted.');
 
                 _context.next = 13;
                 break;
@@ -17487,9 +17485,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 5:
                 _this.fetchProduct(_this.current_page);
 
-                _this.$toast.show('"' + product.name + '" Product Successfully Deleted.', {
-                  position: 'top-right'
-                });
+                _this.$toast.show('"' + product.name + '" Product Successfully Deleted.');
 
                 _context.next = 12;
                 break;
@@ -17544,9 +17540,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: _this3.products.name,
                   price: _this3.products.price
                 }).then(function (res) {
-                  _this3.$toast.success('"' + _this3.products.name + '" Product added successfully', {
-                    position: 'top-right'
-                  });
+                  _this3.$toast.success('"' + _this3.products.name + '" Product added successfully');
 
                   _this3.fetchProduct(1);
 
@@ -17555,11 +17549,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   var err = Object.values(error.response.data.error);
 
                   for (var i = 0; i < err.length; i++) {
-                    _this3.$toast.show(err[i], {
-                      type: "error",
-                      position: 'top-right' // all of other options may go here
-
-                    });
+                    _this3.$toast.error(err[i]);
                   }
                 });
 
@@ -18469,7 +18459,10 @@ _components_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch('getUser').then(
   var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_components_HomePage_vue__WEBPACK_IMPORTED_MODULE_2__.default);
   app.use(_routes__WEBPACK_IMPORTED_MODULE_1__.default);
   app.use(_components_store__WEBPACK_IMPORTED_MODULE_3__.default);
-  app.use(_meforma_vue_toaster__WEBPACK_IMPORTED_MODULE_4__.default);
+  app.use(_meforma_vue_toaster__WEBPACK_IMPORTED_MODULE_4__.default, {
+    // One of the options
+    position: "top-right"
+  });
   app.mount('#app');
 });
 
